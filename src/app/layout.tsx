@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ProfileX",
+  title: "CareerStack",
   description: "Created by Ashish Verma",
 };
 
