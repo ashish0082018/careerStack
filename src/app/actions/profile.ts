@@ -2,7 +2,6 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 import { uploadFile } from "./upload";
 
 export const saveProfile = async (prevState: any, formdata: any) => {

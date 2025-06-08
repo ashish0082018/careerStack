@@ -9,7 +9,6 @@ import {
   Github,
   Linkedin,
   Globe,
-  Twitter,
   MapPin,
   Calendar,
   Star,
@@ -17,6 +16,7 @@ import {
   ExternalLink,
   Mail
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function PublicProfile({profile}:any) {
 
@@ -66,10 +66,10 @@ export default function PublicProfile({profile}:any) {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <Button>
+             {profile.privacy.showEmail &&    <Link href={`https://mail.google.com/mail/?view=cm&to=${profile.socialLinks.twitter}`} target='_blank'> <Button>
                 <Mail className="mr-2 h-4 w-4" />
                 Contact
-              </Button>
+              </Button></Link> }
               <div className="flex space-x-2">
                 {(profile.socialLinks && typeof profile.socialLinks === 'object') &&
                   Object.entries(profile.socialLinks).map(([platform, url]) =>
@@ -79,7 +79,7 @@ export default function PublicProfile({profile}:any) {
                         <a href={String(url)} target="_blank" rel="noopener noreferrer">
                           {platform === 'github' && <Github className="h-4 w-4" />}
                           {platform === 'linkedin' && <Linkedin className="h-4 w-4" />}
-                          {platform === 'twitter' && <Twitter className="h-4 w-4" />}
+                          {platform === 'twitter' && <Mail className="h-4 w-4" />}
                           {platform === 'website' && <Globe className="h-4 w-4" />}
                         </a>
                       </Button>
@@ -219,18 +219,20 @@ export default function PublicProfile({profile}:any) {
             </Card>
 
             {/* Contact */}
-            <Card>
+          {profile.privacy.showEmail && 
+                      <Card>
               <CardContent className="pt-6">
                 <h3 className="font-semibold mb-4">Get In Touch</h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   Interested in collaborating or have a project in mind? Let's connect!
                 </p>
+                <Link href={`https://mail.google.com/mail/?view=cm&to=${profile.socialLinks.twitter}`} target='_blank'>
                 <Button className="w-full">
                   <Mail className="mr-2 h-4 w-4" />
                   Send Message
-                </Button>
+                </Button></Link>
               </CardContent>
-            </Card>
+            </Card>}
           </div>
         </div>
       </div>

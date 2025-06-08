@@ -47,18 +47,6 @@ model GitHubProfile {
 }
 
 
-// model Profile {
-//   id          String       @id @default(cuid()) // Change to string for auto-incrementing IDs
-//   slug       String   @unique
-//   authorId   String      
-//   author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-//   image      String
-//   name       String
-//   message    String
-//   createdAt  DateTime @default(now())
-//   clicks      Int       @default(0)
-//   link       Json
-// }
 
 model Profile {
   id             String   @id @default(cuid())

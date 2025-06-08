@@ -115,7 +115,6 @@ if (!profile.private && session?.user && session.user.id !== profile.userId  || 
         image: p.image ?? '',
       })),
       privacy:{
-
         showEmail: profile.showEmail,
         showLocation: profile.showLocation,
       }

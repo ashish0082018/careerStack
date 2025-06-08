@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Header } from '@/app/github/Header';
+import { Header } from '@/components/home/Header';
 import { 
   Code, 
   Github, 

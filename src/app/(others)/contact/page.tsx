@@ -1,15 +1,15 @@
 import React from 'react';
-import Navbar from '@/components/home/Navbar';
-import Footer from '@/components/home/Footer';
+import { Footer } from '@/components/home/Footer';
 import { Mail, Linkedin, Github, MessageCircle, Send } from 'lucide-react';
+import { Header } from '@/components/home/Header';
 
 function Contact() {
   return (
     <>
-      <Navbar />
+  <Header/>
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50">
         {/* Hero Section */}
-        <section className="w-full h-[50vh] flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center p-6 relative overflow-hidden">
+        <section className="w-full h-[50vh] flex items-center justify-center bg-gradient-to-r from-zinc-700 to-zinc-950 text-white text-center p-6 relative overflow-hidden">
           {/* Background decoration */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute -top-40 -right-40 w-80 h-80 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
@@ -103,7 +103,7 @@ function Contact() {
           </div>
 
           {/* Call to Action */}
-          <div className="mt-20 text-center bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-12 text-white">
+          <div className="mt-20 text-center bg-gradient-to-r from-zinc-600 to-zinc-950 rounded-3xl p-12 text-white">
             <h3 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Start Your Project?
             </h3>
@@ -113,7 +113,7 @@ function Contact() {
             </p>
             <a
               href="mailto:av0082018@gmail.com"
-              className="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="inline-flex items-center px-8 py-4 bg-white text-zinc-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Start a Conversation
               <Send size={20} className="ml-2" />
