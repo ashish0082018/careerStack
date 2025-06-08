@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id               String        @id @default(cuid()) 
+  name             String?
+  email            String?       @unique
+  image            String?
+  password         String?
+  verifyCode       String?
+  verifyCodeExpiry DateTime?
+  isVerified       Boolean?      @default(false)
+  emailVerified    DateTime?
+  createdAt        DateTime      @default(now())
+  githubProfile    GitHubProfile?
+  profile          Profile?      // changed from profiles[]
+  resume           Resume?
+  project         Project[]
+  accounts         Account[]
+  sessions         Session[]
+}
+
+model GitHubProfile {
+  id                  String   @id @default(cuid())
+  user                User     @relation(fields: [userId], references: [id])
+  userId              String   @unique
+  login               String
+  name                String
+  followers           Int
+  totalRepos          Int
+  totalStars          Int
+  totalContributions  Int
+  streakDays          Int
+  topLanguages        Json
+  pinnedRepos         Json
+  recentActivity      Json
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  connect             Boolean @default(false)
+}
+
+
+// model Profile {
+//   id          String       @id @default(cuid()) // Change to string for auto-incrementing IDs
+//   slug       String   @unique
+//   authorId   String      
+//   author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+//   image      String
+//   name       String
+//   message    String
+//   createdAt  DateTime @default(now())
+//   clicks      Int       @default(0)
+//   link       Json
+// }
+
+model Profile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+
+  name           String
+  jobTitle       String
+  location       String
+  bio            String
+  skills         String[]
+  imageUrl       String?
+  socialLinks    Json
+
+  private        Boolean  @default(false)
+  showEmail      Boolean  @default(true)
+  showLocation   Boolean  @default(true)
+  profileViews   Int      @default(0)
+  customUrl      String?  @unique
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  technologies String[] // This is a PostgreSQL array field
+  category     String
+  githubUrl    String
+  liveUrl      String
+  image        String
+  featured     Boolean  @default(false)
+
+  // Relations
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+
+model Account {
+  id                 String       @id @default(cuid())  // Change to string for auto-incrementing IDs
+  userId            String     // Foreign key reference to User
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? 
+  access_token      String? 
+  expires_at        Int?    
+  token_type        String? 
+  scope             String? 
+  id_token          String? 
+  session_state     String? 
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String       @id @default(cuid())  
+  sessionToken String   @unique
+  userId       String     
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model Resume {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+
+  pdfUrl     String
+  imageUrl   String
+  isPublic   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+}
