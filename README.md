@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 CareerStack
 
-## Getting Started
+Dynamic Portfolio Builder with GitHub Insights and AI-Powered Resume Optimization.
 
-First, run the development server:
+## 🔗 Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[Visit CareerStack](https://career-stack.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**CareerStack** is a modern portfolio builder designed for developers and tech professionals to showcase their profiles dynamically. With rich customization, GitHub integration, and AI-powered resume features, users can easily craft a professional presence — all in one platform.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🧑‍💻 **Authentication** with `NextAuth.js`: Google OAuth, custom credentials, and OTP email verification.
+  
+- 🎨 **Dynamic Profile Builder**:
+  - AI-generated bio & skills suggestions.
+  - Add social links, **featured projects** with GitHub & live demo links.
+  - Portfolio only displays projects marked as *featured*.
+  - Custom domain support and privacy controls for email/location visibility.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 📊 **GitHub Insights (via GraphQL API)**:
+  - Live profile stats: pinned repositories, commit history, top languages.
+  - Real-time metrics for total stars, followers, and contribution streaks.
 
-## Deploy on Vercel
+- 🧠 **AI-Powered Resume Upload & Optimization**:
+  - Upload resume (PDF) and select a domain (e.g., Web Dev, Mobile, UI/UX) or paste a job description.
+  - AI suggests:
+    - What content to **remove** from your resume (irrelevant or outdated).
+    - What to **add** (skills, keywords, achievements) based on selected domain/role.
+    - **Priority levels** for each change: High, Medium, Low — so you can revise efficiently.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 📈 **User Dashboard**:
+  - Tracks completion of profile sections (basic info, resume, projects).
+  - Smart progress indicators help users stay on track.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 🌐 Fully responsive and mobile-ready with dark mode support.
+
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Next.js 15 (App Router)](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Authentication**: [NextAuth.js v5](https://next-auth.js.org/)
+- **Database**: [Supabase PostgreSQL](https://supabase.com/)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Cloud Storage**: [Cloudinary](https://cloudinary.com/)
+- **APIs**: GitHub GraphQL API, Gemini API
+
+
+---
+
+
