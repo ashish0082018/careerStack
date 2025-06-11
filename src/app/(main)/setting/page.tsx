@@ -16,7 +16,8 @@ async function page({}: Props) {
     customUrl:true,
   }
  })
-if(!setting) return <div className='text-center'>No settings found </div>
+ let isexists=true;
+if(!setting) isexists=false;
  const Setting={   
     privacy: {  
       profilePublic: setting?.private,
@@ -24,6 +25,7 @@ if(!setting) return <div className='text-center'>No settings found </div>
       showLocation: setting?.showLocation,
     },
     customDomain: setting?.customUrl || '',
+    isexists: isexists
   }
 
 

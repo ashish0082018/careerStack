@@ -1,6 +1,6 @@
 
 "use client"
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -90,13 +90,13 @@ await action(formData);
               </CardHeader>
               <CardContent className="space-y-4">
                 <form action={handleCustomDomainSubmit} className="flex items-center">
-                    <Input 
+                    <Input disabled={!settings.isexists}
                     value={customUrl}
                      name='customDomain'
                       className="rounded-l-none" 
                       onChange={(e) => setCustomUrl(e.target.value)}
                     />
-                    <Button disabled={pending} type="submit" variant={"outline"} className="p-3 hover:bg-green-400 mx-2"> {pending? "checking":"Save"} </Button>
+                    <Button disabled={pending || !settings.isexists} type="submit" variant={"outline"} className="p-3 hover:bg-green-400 mx-2"> {pending? "checking":"Save"} </Button>
                 </form> 
                 {formState?.success ? ( <span className="text-green-500 text-sm">
                   {formState.error.message}</span>) :(<span className="text-red-500 text-sm">
@@ -125,7 +125,7 @@ await action(formData);
                       Make your profile visible to everyone
                     </p>
                   </div>
-                  <Switch
+                  <Switch disabled={!settings.isexists}
                     checked={settings.privacy.profilePublic}
                     onCheckedChange={async(checked) => {
                         try {
@@ -150,7 +150,7 @@ await action(formData);
                       Display your email on your public profile
                     </p>
                   </div>
-                  <Switch
+                  <Switch disabled={!settings.isexists}
                     checked={settings.privacy.showEmail}
                     onCheckedChange={async(checked) => {
                  try {
@@ -171,8 +171,8 @@ await action(formData);
                     <p className="text-sm text-muted-foreground">
                       Display your location on your profile
                     </p>
-                  </div>
-                  <Switch
+                  </div> 
+                  <Switch disabled={!settings.isexists}
                     checked={settings.privacy.showLocation}
                     onCheckedChange={async(checked) => {
                       try {
@@ -257,7 +257,7 @@ await action(formData);
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-{setting 
+{settings.isexists
 &&                 <Link href={`/u/${customUrl}`} target='_blank'> <Button variant="outline" className="w-full justify-start">
                   <ExternalLink className="mr-2 h-4 w-4" />
                  View Public Profile

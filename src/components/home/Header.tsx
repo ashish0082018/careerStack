@@ -10,6 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useTheme } from 'next-themes';
 import { User, Settings, LogOut, Moon, Sun, Menu } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export function Header() {
 
@@ -24,8 +25,16 @@ const user=session.data?.user
     <header className="border-b-2 shadow-md  flex items-center justify-center  backdrop-blur supports-[backdrop-filter]:bg-zinc-100 dark:bg-black">
       <div className="container flex h-14 items-center">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CS</span>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+           
+  <Image
+    src="/cs-logo.jpg"
+    alt="CareerStack Logo"
+    width={40}
+    height={40}
+    priority
+  />
+
           </div>
           <span className="font-bold text-lg sm:text-xl hidden sm:block">CareerStack</span>
         </Link>
