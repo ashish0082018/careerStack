@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "CareerStack",
     images: [
       {
-        url: "https://careerstack.vercel.app/og-image.png",
+        url: "/cs-logo.jpg",
         width: 1200,
         height: 630,
         alt: "CareerStack Open Graph Image",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CareerStack",
     description: "Created by Ashish Verma",
-    images: ["https://careerstack.vercel.app/og-image.png"],
+    images: ["/cs-logo.jpg"],
     creator: "@ashishverma_",
   },
   icons: {
