@@ -1,12 +1,9 @@
-
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
-
-  
   if (!code) return NextResponse.json({ error: 'No code provided' }, { status: 400 });
 
   // Step 1: Get GitHub Access Token
@@ -63,6 +60,7 @@ export async function GET(req: NextRequest) {
             totalContributions
             weeks {
               contributionDays {
+                date
                 contributionCount
               }
             }
@@ -71,6 +69,7 @@ export async function GET(req: NextRequest) {
             contributions(orderBy: {field: OCCURRED_AT, direction: DESC}, first: 4) {
               nodes {
                 occurredAt
+                commitCount
                 repository {
                   name
                   url
@@ -117,12 +116,34 @@ export async function GET(req: NextRequest) {
   }
 
   // Streak Calculation
-  const days = viewer.contributionsCollection.contributionCalendar.weeks
-    .flatMap((week: any) => week.contributionDays.map((day: any) => day.contributionCount > 0 ? 1 : 0));
-  const streakDays = days.reduce((max: number, val: number, idx: number, arr: number[]) => {
-    if (val === 0) return 0;
-    return (arr[idx - 1] || 0) > 0 ? max + 1 : 1;
-  }, 0);
+  const contributionDays = viewer.contributionsCollection.contributionCalendar.weeks
+    .flatMap((week: any) => week.contributionDays)
+    .map((day: any) => ({
+      date: new Date(day.date),
+      count: day.contributionCount,
+    }))
+    .sort(({a, b}:any) => b.date.getTime() - a.date.getTime());
+
+  let streakDays = 0;
+  let cursor = new Date();
+  cursor.setHours(0, 0, 0, 0);
+
+  for (const day of contributionDays) {
+    const dayDate = new Date(day.date);
+    dayDate.setHours(0, 0, 0, 0);
+    if (dayDate.getTime() === cursor.getTime() && day.count > 0) {
+      streakDays++;
+      cursor.setDate(cursor.getDate() - 1);
+    } else if (dayDate.getTime() < cursor.getTime()) {
+      cursor.setDate(cursor.getDate() - 1);
+      if (dayDate.getTime() === cursor.getTime() && day.count > 0) {
+        streakDays++;
+        cursor.setDate(cursor.getDate() - 1);
+      } else break;
+    } else {
+      break;
+    }
+  }
 
   // Pinned Repos
   const pinnedRepos = viewer.pinnedItems.nodes.map((repo: any) => ({
@@ -134,63 +155,51 @@ export async function GET(req: NextRequest) {
     readmeLine: repo.object?.text?.split('\n')[0] || 'No README found',
   }));
 
-  // Recent Activity (4 latest commits)
-  const recentActivity =
-    viewer.contributionsCollection.commitContributionsByRepository?.[0]?.contributions?.nodes?.map((a: any) => ({
+  // Recent Activity (4 latest commits across all repos)
+  const recentActivity = viewer.contributionsCollection.commitContributionsByRepository
+    .flatMap((repo: any) => repo.contributions.nodes)
+    .sort((a: any, b: any) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
+    .slice(0, 4)
+    .map((a: any) => ({
       date: a.occurredAt,
       repoName: a.repository.name,
       repoUrl: a.repository.url,
-    })) || [];
+    }));
 
-  // Final Data
-//   const result = {
-//     login: viewer.login,
-//     name: viewer.name,
-//     followers: viewer.followers.totalCount,
-//     totalRepos: viewer.repositories.totalCount,
-//     totalStars,
-//     totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
-//     topLanguages,
-//     streakDays,
-//     pinnedRepos,
-//     recentActivity,
-//   };
-  const session= await auth()
-  const details= await prisma.gitHubProfile.upsert({
-    where:{
-        userId:session?.user?.id
+  // Save to DB
+  const session = await auth();
+  const details = await prisma.gitHubProfile.upsert({
+    where: {
+      userId: session?.user?.id,
     },
-    update:{
-    login: viewer.login,
-    name: viewer.name,
-    followers: viewer.followers.totalCount,
-    totalRepos: viewer.repositories.totalCount,
-    totalStars,
-    totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
-    topLanguages,
-    streakDays,
-    pinnedRepos,
-    recentActivity,
-    connect:true
+    update: {
+      login: viewer.login,
+      name: viewer.name,
+      followers: viewer.followers.totalCount,
+      totalRepos: viewer.repositories.totalCount,
+      totalStars,
+      totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
+      topLanguages,
+      streakDays,
+      pinnedRepos,
+      recentActivity,
+      connect: true,
     },
-    create:{
-    userId:session?.user?.id as string,
-    login: viewer.login,
-    name: viewer.name,
-    followers: viewer.followers.totalCount,
-    totalRepos: viewer.repositories.totalCount,
-    totalStars,
-    totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
-    topLanguages,
-    streakDays,
-    pinnedRepos,
-    recentActivity,
-    connect:true
-    }
+    create: {
+      userId: session?.user?.id as string,
+      login: viewer.login,
+      name: viewer.name,
+      followers: viewer.followers.totalCount,
+      totalRepos: viewer.repositories.totalCount,
+      totalStars,
+      totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
+      topLanguages,
+      streakDays,
+      pinnedRepos,
+      recentActivity,
+      connect: true,
+    },
+  });
 
-  })
-
-     
-   return NextResponse.redirect(new URL('/github', req.url));
- 
+  return NextResponse.redirect(new URL('/github', req.url));
 }
