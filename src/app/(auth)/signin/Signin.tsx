@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import Image from 'next/image';
 export default function Login() {
 
 
@@ -42,8 +43,16 @@ const [email, setEmail] = useState("");
     <div className="min-h-screen flex items-center justify-center bg-muted/50 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold">CS</span>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+           
+  <Image
+    src="/cs-logo.jpg"
+    alt="CareerStack Logo"
+    width={40}
+    height={40}
+    priority
+  />
+
           </div>
           <CardTitle className="text-2xl">Welcome back</CardTitle>
           <CardDescription>
