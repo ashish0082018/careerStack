@@ -30,7 +30,8 @@ export const saveProfile = async (prevState: any, formdata: any) => {
       finalImage = await uploadFile(imageUrl as File);
       }
     
-const customUrl=session.user.name?.split(" ")[0];   // it can change by the user from settings
+const customUrl = `${session.user.name?.split(" ")[0] ?? "user"}${Math.floor(1000 + Math.random() * 9000)}`;  // it can change by the user from settings
+  
 
 
     await prisma.profile.upsert({
