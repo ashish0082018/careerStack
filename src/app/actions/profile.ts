@@ -59,7 +59,8 @@ const customUrl = `${session.user.name?.split(" ")[0] ?? "user"}${Math.floor(100
       },
     });
 
- revalidateTag("profile"); 
+ revalidateTag("profile",); 
+ revalidateTag("dashboard"); 
 
     return { success: true };
   } catch (error: any) {

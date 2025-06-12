@@ -37,7 +37,7 @@ const getDashboardData = unstable_cache(
     };
   },
   ["dashboard"], 
-  { tags: ['dashboard'], revalidate: 60 }
+  { tags: ['dashboard'], revalidate: false }
 );
 
 export default async function DashboardWrapper() {

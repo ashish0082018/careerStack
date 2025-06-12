@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -200,6 +201,7 @@ export async function GET(req: NextRequest) {
       connect: true,
     },
   });
+ revalidateTag("dashboard"); 
 
   return NextResponse.redirect(new URL('/github', req.url));
 }
