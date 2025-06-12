@@ -1,30 +1,12 @@
-import { auth } from '@/auth'
-import { prisma } from '@/lib/prisma'
-import React from 'react'
-import Projects from '@/components/project/Project'
-async function page() {
-    const session = await auth()
-    const projects = await prisma.project.findMany({
-        where: {
-            userId: session?.user?.id
-        },
-        select: {
-            id: true,
-            title: true,
-            description: true,
-            technologies: true,
-            category: true,
-            githubUrl: true,
-            liveUrl: true,
-            image: true,
-            featured: true,
-         
-        }
-    })
-  
-    
+// app/your-route/page.tsx
+import { Suspense } from 'react';
+import ProjectsWrapper from './ProjectWrapper';
+import { Loadingpage } from '@/components/loaders/Loadingpage';
 
-    return <Projects initialProjects={projects} />
+export default function Page() {
+  return (
+    <Suspense fallback={<Loadingpage />}>
+      <ProjectsWrapper />
+    </Suspense>
+  );
 }
-
-export default page
