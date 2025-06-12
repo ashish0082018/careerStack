@@ -10,7 +10,7 @@ import { Refresh } from './ConnectButton'
 // type Props = {}
 
 function GithubPage({githubStats}:any) {
-    console.log("from github",githubStats)
+ 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
     const handleRefresh = () => {
