@@ -122,7 +122,7 @@ export async function GET(req: NextRequest) {
       date: new Date(day.date),
       count: day.contributionCount,
     }))
-    .sort(({a, b}:any) => b.date.getTime() - a.date.getTime());
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
 
   let streakDays = 0;
   let cursor = new Date();
