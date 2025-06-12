@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/dialog"
 
 import { deleteProject, updateFeatured } from '@/app/actions/project';
+import Image from 'next/image';
 
 interface Project {
   id: string;
@@ -120,11 +121,13 @@ function Showproject({ project }: Props) {
             <Card key={project.id} className="group hover:shadow-lg transition-shadow">
               <div className="relative">
                 {project.image ? (
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
+                  <Image
+           src={project.image}
+          alt={project.title}
+           width={500} // change to actual width
+          height={192} // 48 * 4 = 192px height
+          className="w-full h-48 object-cover rounded-t-lg"
+/>
                 ) : (
                   <div className="w-full h-48 bg-muted rounded-t-lg flex items-center justify-center">
                     <Github className="h-12 w-12 text-muted-foreground" />
