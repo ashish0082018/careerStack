@@ -66,8 +66,7 @@ export const updateFeatured = async (projectId: string) => {
       data: { featured: !findProject?.featured },
     });
     revalidateTag("projects"); // ✅ Invalidate cache
-    revalidateTag("dashboard"); 
-
+    
   } catch (error) {
     console.log(error);
   }
