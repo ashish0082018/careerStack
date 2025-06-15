@@ -13,7 +13,7 @@ async function page({}: Props) {
     }
 
   })
-console.log(profile);
+
 
 
   return (

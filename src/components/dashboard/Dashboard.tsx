@@ -10,11 +10,8 @@ import {
   FolderOpen, 
   Github, 
   FileText, 
-  BarChart3, 
   Eye,
   Star,
-  TrendingUp,
-  Calendar,
   CheckCircle
 } from 'lucide-react';
 import Link from 'next/link';
@@ -22,7 +19,6 @@ import { useSession } from 'next-auth/react';
 
 export default function Dashboard({detail}:any) {
 const session=useSession();
-console.log(detail);
 
   const stats = [
     {

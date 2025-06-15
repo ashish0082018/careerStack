@@ -15,7 +15,6 @@ import {
   Globe, 
   Trash2,
   ExternalLink,
-  Star
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { setCustomurl, setEmail, setLocation, setPrivate } from '@/app/actions/setting';

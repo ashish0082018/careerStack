@@ -11,11 +11,8 @@ import {
   ExternalLink, 
   Github, 
   Star, 
-
   Filter,
   Search,
-
-  Edit,
   Trash2,
   FolderOpen,
   GripVertical,
