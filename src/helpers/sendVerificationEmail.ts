@@ -125,12 +125,7 @@ export async function sendVerificationEmail(
 
   `;
 
-    // const templatePath = path.join(process.cwd(), 'public', 'email-template.html');
-    // let emailTemplate = fs.readFileSync(templatePath, 'utf-8');
-
-    // // Replace placeholders in the template with dynamic content
-    // emailTemplate = emailTemplate.replace('${username}', username).replace('${verifyCode}', verifyCode);
-
+   
     const mailOptions = {
       from: process.env.EMAIL_FROM, // Use a verified email address here
       to: email,
